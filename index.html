@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libary App</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="table-container">
@@ -19,10 +19,24 @@
                     <th>ID</th>
                 </tr>
                 </thead>
-            <tbody>
-
+            <tbody id="book-entries">
             </tbody>
         </table>
     </div>
+    <div id="button-container">
+        <button id="open-modal">Add Book</button>
+    </div>
+    <div id="book-modal">
+        <form id="book-form">
+            <input type="text" id="title" placeholder="Title" required><br>
+            <input type="text" id="author" placeholder="Author" required><br>
+            <input type="number" id="pages" placeholder="Pages" required><br>
+            <label>
+                <input type="checkbox" id="have-read">Read yet?
+            </label><br><br>
+            <button type="submit" id="submit-button">Submit</button>
+            <button type="button" id="close-modal">Cancel</button>
+        </form>
+    </div>  
 </body>
 </html>
