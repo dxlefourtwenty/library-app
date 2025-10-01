@@ -51,15 +51,76 @@ function displayBooks(arr) {
             row.appendChild(cell);
         }
 
+        const funcCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+        const readCheckBox = document.createElement("input");
+        const wrapper = document.createElement("div");
+        readCheckBox.type = "checkbox";
+        readCheckBox.id = "have-read-box";
+        if (book.isRead == true) {
+            readCheckBox.checked = true;
+        }
+
+        funcCell.id = "function-cell";
+        removeButton.id = "remove-button";
+        wrapper.id = "wrapper";
+        removeButton.textContent = "x";
+
+        removeButton.addEventListener("click", () => {
+            myLibrary.splice(book, 1);
+            displayBooks(myLibrary);
+        });
+
+        readCheckBox.addEventListener("change", function() {
+            if (this.checked) {
+                book.isRead = true;
+            } else {
+                book.isRead = false;
+            }
+
+            displayBooks(myLibrary);
+        });
+
+        wrapper.appendChild(removeButton);
+        wrapper.appendChild(readCheckBox);
+        funcCell.appendChild(wrapper);
+        // row.appendChild(removeButton);
+        // row.appendChild(readCheckBox);
+        row.appendChild(funcCell);
+
         tableBody.appendChild(row);
     }
 
     console.log("Finished Displaying Books");
+    normalizeTable();
 }
 
 function createBook(title, author, pages, isRead) {
     const book = new Book(title, author, pages, isRead);
     addBookToLibrary(book);
+}
+
+function normalizeTable() {
+    const table = document.getElementById("library-table");
+    const tbody = table.querySelector("tbody");
+    const rows = tbody.querySelectorAll("tr");
+
+    const minRows = 5;
+    const cols = rows[0] ? rows[0].children.length : 5; // Assume 5 cols if row is empty
+
+    // If too few rows, add empty rows to normalize
+
+    if (rows.length < minRows) {
+        for (let i = rows.length; i < minRows; i++) {
+            const tr = document.createElement("tr");
+            for (let j = 0; j < cols; j++) {
+                const td = document.createElement("td");
+                td.innerHTML = "";
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+    }
 }
 
 // ##Add books button
